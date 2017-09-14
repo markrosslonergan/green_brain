@@ -102,6 +102,7 @@ bool SBgeNC::eventSelection(int file){
 }
 
 int SBgeNC::fillHistograms(int file, int uni, double wei){
+
 	double vertex_pos[3] = {0,0,0};
 	double convlength_thresh = 5.0;
 	double photon_thresh = 0.05;
@@ -109,23 +110,16 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 	double angle_resolution = 3.0*3.14159/180.0;
 	double muon_eff = 0.8;
 	double additional_eff_no_vis_vertex = 0.1/0.8;
-	double pot_mod = detectors[file]->potmodifier*66.0*detectors[file]->proposal_modifier;
-
-
-	for(double ee = 0.14; ee< 40; ee+=0.01){
-//		std::cout<<"TEST: "<<ee<<" "<<detectors[file]->pion_track_length(ee)<<std::endl;
-
-	}
-
 	
-
-//	exit(EXIT_FAILURE);
+	double pot_mod = detectors.at(file)->potmodifier*66.0*detectors.at(file)->proposal_modifier;
 
 	std::vector<myphoton> gammas;
 	std::vector<myphoton> muons;
 	std::vector<myphoton> electrons;
 
+
 		double Enu_true = *vmapD[file]["Enu"];//   vars_d.at(file).at(0);
+
 		double El_true =  *vmapD[file]["El"];
 		double weight = *vmapD[file]["weight"];
 
@@ -146,8 +140,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 		 *			Starting main cutflow
 		 ******************************************************************/
 
-
-		//	detectors[0]->random_pos(rangen,vertex_pos); //Assign a random position for vertex in detector 
+		//detectors[0]->random_pos(rangen,vertex_pos); //Assign a random position for vertex in detector 
 		double osclen = detectors[file]->osc_length(rangen);
 
 

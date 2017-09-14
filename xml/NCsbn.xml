@@ -4,9 +4,9 @@
 <mode name="nu" use="1"/>
 <mode name="nubar" use="0"/>
 
-<detector name="SBND" use="0" />
+<detector name="SBND" use="1" />
 <detector name="uBooNE" use="1" />
-<detector name="ICARUS" use="0" />
+<detector name="ICARUS" use="1" />
 
 
 <channel name="elike" use="0" numbins="11">
