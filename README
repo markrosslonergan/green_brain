@@ -1,3 +1,17 @@
 This is a standard SBNfit generation of NC events at the SBN facility
 
 Genie files are located in ..
+
+STEP 1 is to generate the SBNspec
+
+running example from withing build/src/
+
+./NCsbn --xml ../../NCsbn.xml
+
+
+Now (8th November) I am going to write a small program to actually calculate the osc and bounds
+--> Write up an SBNosc that works (Write a osc_pattern in xml?) That would probably work ya?
+--> Generate the grid
+--> Run first results by tomorrow?
+
+
