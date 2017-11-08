@@ -54,8 +54,11 @@ struct myphoton{
 
 class SBgeNC : public SBgeN{
 	public:
+		
 		SBgeNC(std::string xmlname):SBgeN(xmlname){
 
+			//uncomment this to make simple output for samiaran
+			/*
 			outstream.open ("NC_pi0_uBooNE.dat");
 			outstream<<"# (1 ) True incoming neutrino energy"<<std::endl;
 			outstream<<"# (2 ) True outgoing neutrino energy"<<std::endl;
@@ -76,7 +79,7 @@ class SBgeNC : public SBgeN{
 			outstream<<"# (17) Event weight, to be applied to all events"<<std::endl;
 			outstream<<"# (18) PDG code of parent neutrino"<<std::endl;
 
-
+			*/
 		};
 		bool eventSelection(int file);
 		int fillHistograms(int file, int uni, double wei);
@@ -107,7 +110,7 @@ int SBgeNC::setPreOscillate(double dm, int sqornot){
 	do_oscillate = true;
 	precom_dm = dm;
 	precom_sqornot = sqornot;
-	
+
 	return 0;
 }
 
@@ -170,7 +173,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 	double precom_prob = 1;
 
 	if(do_oscillate){
-	
+
 		if(precom_sqornot == 2) precom_prob = pow(sin(1.27*osclen*pow(10,precom_dm)/Enu_true),2.0);	
 		if(precom_sqornot == 1) precom_prob =  sin(2*1.27*osclen*pow(10,precom_dm)/Enu_true); ;	
 		//std::cout<<"L: "<<osclen<<" dm "<<precom_dm<<" dm2 "<<pow(10,precom_dm)<<" enu "<<Enu_true<<" Amp:"<<precom_prob<<std::endl;
@@ -209,7 +212,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 		   observable_lepton = true;
 		   }
 		   observable_L = Lmu;
-		 */
+		   */
 
 
 
@@ -363,7 +366,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 							hist.at(map_hist[prenam+"ncinvar_ncpi0"]).Fill(invarM,wei*precom_prob);
 
 							//************************ Stream to text file of pi0 ************************
-							if(NC){
+							if(NC&& false){
 								outstream<<Enu_true<<" "<<El_true<<" "<<gammas.at(0).lorentz_t.E()<<" "<<gammas.at(0).lorentz.E()<<" "<<gammas.at(1).lorentz_t.E()<<" "<<gammas.at(1).lorentz.E()<<" "<<theta<<" "<<theta_smear<<" "<<gammas.at(0).lorentz.Px()<<" "<<gammas.at(0).lorentz.Py()<<" "<<gammas.at(0).lorentz.Pz()<<" "<<gammas.at(1).lorentz.Px()<<" "<<gammas.at(1).lorentz.Py()<<" "<<gammas.at(1).lorentz.Pz()<<" "<<invarM<<" "<<vertex_energy<<" "<<weight<<" "<<PDGnu<<std::endl;
 
 							}
@@ -372,6 +375,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 							hist.at(map_hist[prenam+"nchadron_nc2gamma"]).Fill(vertex_energy,wei*precom_prob);
 							hist.at(map_hist[prenam+"ncinvar_nc2gamma"]).Fill(invarM,wei*precom_prob);
 						}
+
 
 						if(vertex_energy < 0.5&& invarM < 0.3){
 							if(muons.size() > 0){
@@ -426,6 +430,8 @@ int main(int argc, char* argv[])
 	int index; 
 	int test_mode=0;
 	std::string filename = "default.root";
+	
+	int precom = 1;
 	/*************************************************************
 	 *************************************************************
 	 *		Command Line Argument Reading
@@ -436,22 +442,22 @@ int main(int argc, char* argv[])
 	{
 		{"xml", 		required_argument, 	0, 'x'},
 		{"test",		required_argument,	0, 't'},
-		{"file",		required_argument,	0, 'f'},
+		{"precomp",		required_argument,	0, 'p'},
 		{0,			no_argument, 		0,  0},
 	};
 
 
 	while(iarg != -1)
 	{
-		iarg = getopt_long(argc,argv, "x:t:f:", longopts, &index);
+		iarg = getopt_long(argc,argv, "x:t:p:", longopts, &index);
 
 		switch(iarg)
 		{
 			case 'x':
 				xml = optarg;
 				break;
-			case 'f':
-				filename = optarg;//`strtof(optarg,NULL);
+			case 'p':
+				precom = strtof(optarg,NULL);
 				break;
 
 			case 't':
@@ -466,23 +472,26 @@ int main(int argc, char* argv[])
 
 	}
 
-	std::cout<<"GENTEST: starting"<<std::endl;
-	SBgeNC testGen(xml);
-	std::cout<<"GENTEST: doMC"<<std::endl;
-	
-	double dm = 0.04;
- 	std::ostringstream out;
-	out<<std::fixed;
-    	out << std::setprecision(2) << dm;
 
-	testGen.setPreOscillate(0.04,1);
-
-	testGen.doMC("SIN_"+out.str());
-
-	testGen.setPreOscillate(0.04,2);
-	testGen.doMC("SINSQ_"+out.str());
+	for(double dm = -2.00; dm <=2.00; dm=dm+0.04){	
+		std::cout<<"GENTEST: starting"<<std::endl;
+		SBgeNC testGen(xml);
+		std::cout<<"GENTEST: doMC"<<std::endl;
 
 
+		std::ostringstream out;
+		out<<std::fixed;
+		out << std::setprecision(2) << dm;
+
+		if(precom==1){
+		testGen.setPreOscillate(0.04,1);
+
+		testGen.doMC("SIN_"+out.str());
+		}else if(precom==2){
+		testGen.setPreOscillate(0.04,2);
+		testGen.doMC("SINSQ_"+out.str());
+	}
+	}
 }
 
 
