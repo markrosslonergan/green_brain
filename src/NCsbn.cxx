@@ -151,8 +151,8 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 	 ******************************************************************/
 
 	//detectors[0]->random_pos(rangen,vertex_pos); //Assign a random position for vertex in detector 
-	double osclen = detectors[file]->osc_length(rangen);
-
+	double osclen = detectors[file]->osc_length(rangen)*0.001;
+	//in meters from osc_lengh, so /1000 for km
 
 	//Is there a visible vertex and how much energy is there!
 	double Enu_reco = 0;
@@ -173,7 +173,7 @@ int SBgeNC::fillHistograms(int file, int uni, double wei){
 	
 		if(precom_sqornot == 2) precom_prob = pow(sin(1.27*osclen*pow(10,precom_dm)/Enu_true),2.0);	
 		if(precom_sqornot == 1) precom_prob =  sin(2*1.27*osclen*pow(10,precom_dm)/Enu_true); ;	
-		std::cout<<"L: "<<osclen<<" dm "<<precom_dm<<" dm2 "<<pow(10,precom_dm)<<" enu "<<Enu_true<<" Amp:"<<precom_prob<<std::endl;
+		//std::cout<<"L: "<<osclen<<" dm "<<precom_dm<<" dm2 "<<pow(10,precom_dm)<<" enu "<<Enu_true<<" Amp:"<<precom_prob<<std::endl;
 	}
 
 
@@ -469,8 +469,19 @@ int main(int argc, char* argv[])
 	std::cout<<"GENTEST: starting"<<std::endl;
 	SBgeNC testGen(xml);
 	std::cout<<"GENTEST: doMC"<<std::endl;
+	
+	double dm = 0.04;
+ 	std::ostringstream out;
+	out<<std::fixed;
+    	out << std::setprecision(2) << dm;
+
 	testGen.setPreOscillate(0.04,1);
-	testGen.doMC("SIN_0.04");
+
+	testGen.doMC("SIN_"+out.str());
+
+	testGen.setPreOscillate(0.04,2);
+	testGen.doMC("SINSQ_"+out.str());
+
 
 }
 
