@@ -9,6 +9,13 @@ running example from withing build/src/
 ./NCsbn --xml ../../NCsbn.xml
 
 
+precomp directory must be where precomped spectra go
+
+Currently you can choose to generate a normal dataset, or to generate precomputed things (see main function of NCsbn.cxx)
+
+Once generated, (as pure SBNspec files), we can hopefully just use the standard SBNosc file, with appropiate oscillation_patterns in the xml file, to oscillate and finish it all.
+
+
 Now (8th November) I am going to write a small program to actually calculate the osc and bounds
 --> Write up an SBNosc that works (Write a osc_pattern in xml?) That would probably work ya?
 --> Generate the grid

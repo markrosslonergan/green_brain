@@ -23,6 +23,7 @@
 #include "TH2F.h"
 #include "TGraph.h"
 
+#include "prob.h"
 #include "params.h"
 #include "SBNconfig.h"
 #include "SBNchi.h"
@@ -431,7 +432,7 @@ int main(int argc, char* argv[])
 	int test_mode=0;
 	std::string filename = "default.root";
 	
-	int precom = 1;
+	int precom = 0;
 	/*************************************************************
 	 *************************************************************
 	 *		Command Line Argument Reading
@@ -478,20 +479,25 @@ int main(int argc, char* argv[])
 		SBgeNC testGen(xml);
 		std::cout<<"GENTEST: doMC"<<std::endl;
 
-
 		std::ostringstream out;
 		out<<std::fixed;
 		out << std::setprecision(2) << dm;
 
 		if(precom==1){
-		testGen.setPreOscillate(0.04,1);
+		testGen.setPreOscillate(dm,1);
 
 		testGen.doMC("SIN_"+out.str());
 		}else if(precom==2){
-		testGen.setPreOscillate(0.04,2);
+		testGen.setPreOscillate(dm,2);
 		testGen.doMC("SINSQ_"+out.str());
+		}
+		else {
+
+		testGen.doMC("SINSQ_BKG");
+
+		}
 	}
-	}
+
 }
 
 

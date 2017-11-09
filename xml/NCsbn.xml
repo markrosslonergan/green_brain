@@ -9,31 +9,31 @@
 <detector name="ICARUS" use="1" />
 
 
-<channel name="ncinvar" use="1" numbins="14">
+<channel name="ncinvar" use="0" numbins="14">
 	<bins 
 		edges="0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2 0.22 0.24 0.26 0.28 0.3" 
 		/>
-	<subchannel name="ncpi0" use="1" osc="0"/>
-	<subchannel name="nc2gamma" use="1" osc="0"/>
-	<subchannel name="ccmuon" use="1" osc="0"/>
+	<subchannel name="ncpi0" use="0" osc="0"/>
+	<subchannel name="nc2gamma" use="0" osc="0"/>
+	<subchannel name="ccmuon" use="0" osc="0"/>
 </channel>
 
 <channel name="ncreco" use="1" numbins="20">
 	<bins 
 		edges="0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2"
 		/>
-	<subchannel name="ncpi0" use="1" osc="0"/>
-	<subchannel name="nc2gamma" use="1" osc="0"/>
-	<subchannel name="ccmuon" use="1" osc="0"/>
+	<subchannel name="ncpi0" use="1" osc="22"/>
+	<subchannel name="nc2gamma" use="1" osc="22"/>
+	<subchannel name="ccmuon" use="1" osc="22"/>
 </channel>
 
-<channel name="nchadron" use="1" numbins="20">
+<channel name="nchadron" use="0" numbins="20">
 	<bins 
 		edges="0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2"
 		/>
-	<subchannel name="ncpi0" use="1" osc="0"/>
-	<subchannel name="nc2gamma" use="1" osc="0"/>
-	<subchannel name="ccmuon" use="1" osc="0"/>
+	<subchannel name="ncpi0" use="0" osc="0"/>
+	<subchannel name="nc2gamma" use="0" osc="0"/>
+	<subchannel name="ccmuon" use="0" osc="0"/>
 </channel>
 
 
@@ -163,4 +163,4 @@
 
 </MCevents>
 
-	<data path="/home/mark/work/sbnfit_reduce/data/" />
+	<data path="/home/mark/work/pheno/SBN_NC_study/data/" />
